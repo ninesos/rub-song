@@ -96,7 +96,7 @@ async def on_message(message):
                     # ถ้าสถานะเป็น FAIL ให้ตอบกลับด้วยข้อความตรวจสอบเท่านั้น
                     await channel.reply('เช็คแล้ว')
             else:
-                await channel.send('เช็คแล้ว - ไม่สามารถประมวลผลลิงก์ได้')
+                await channel.send('เช็คแล้ว')
 
 async def process_truemoney_link(link):
     api_url = f"https://tw-eh4404.onrender.com/?phone={PHONE_NUMBER}&link={link}"
