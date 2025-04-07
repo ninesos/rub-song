@@ -3,34 +3,33 @@ import re
 import requests
 import asyncio
 import os
-import threading
 from flask import Flask
+import threading
 
 TOKEN = os.getenv('TOKEN')
 
 TARGET_CHANNEL_ID = 1358457724941373480
 
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+
 app = Flask('')
 
 @app.route('/')
 def home():
-    return "ยังออนไลน์อยู่จ้าาาา"
+    return "Bot is alive!"
 
 def run():
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run(host='0.0.0.0', port=8080)
 
 def keep_alive():
-    t = threading.Thread(target=run)
-    t.start()
-
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+    server = threading.Thread(target=run)
+    server.start()
 
 @client.event
 async def on_ready():
-    print(f'ล็อกอินเป็น {client.user}')
+    print(f'Logged in as {client.user}')
 
 @client.event
 async def on_message(message):
@@ -59,6 +58,6 @@ async def on_message(message):
             print(f'เกิดข้อผิดพลาด: {e}')
 
         await message.reply('เช็คแล้ว')
-        
+
 keep_alive()
 client.run(TOKEN)
